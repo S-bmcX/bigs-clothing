@@ -5,3 +5,8 @@ body {
 h2 {
     text-transform: capitalize;
 }
+
+a {
+    text-decoration: none !important;
+    font-weight: bold;
+}
