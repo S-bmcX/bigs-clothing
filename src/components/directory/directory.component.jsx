@@ -47,11 +47,19 @@ class Directory extends React.Component {
     
     render() {
         return (
+            // THE BELOW IS A MORE EFFICIENT WAY TO DYNAMICALLY PULL IN INFO FROM ABOVE ARRAY FOR USE ELSEWHERE ;;
+            // NOTE: this only works because the info being passed (ie title, imageUrl, size, linkUrl) share the same syntax with the variables being used in the commented example below
             <div className="directory-menu">
-                {this.state.sections.map(({title, imageUrl, id, linkURl, size}) => (
-                    <MenuItem key={id} title={title} imageUrl={imageUrl} size={size} />
+                {this.state.sections.map(({ id, ...otherSectionProps }) => (
+                    <MenuItem key={id} {...otherSectionProps} />
                 ))}
             </div>
+            // THE BELOW IS A VERBOSE WAY OF WRITING THE ABOVE, THE ABOVE IS MORE EFFICIENT
+            // <div className="directory-menu">
+            //     {this.state.sections.map(({title, imageUrl, id, linkURl, size}) => (
+            //         <MenuItem key={id} title={title} imageUrl={imageUrl} size={size} />
+            //     ))}
+            // </div>
         )
     }
 }
