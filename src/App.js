@@ -5,7 +5,7 @@ import Header from './components/header/header.component';
 import Homepage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
 import SignInUp from './pages/signInUp/signInUp.component';
-import {auth} from './firebase/firebase.utils';
+import {auth, createUserProfileDocument} from './firebase/firebase.utils';
 
 class App extends React.Component {
   constructor(){
@@ -21,17 +21,26 @@ class App extends React.Component {
   unsubscribeFromAuth = null
   
   componentDidMount() {
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
-      this.setState({currentUser: user});
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+      if(userAuth) {
+        const userRef = await createUserProfileDocument(userAuth);
 
-      console.log(user);
+        userRef.onSnapshot(snapShot => {
+          this.setState({
+            currentUser: {
+              id: snapShot.id,
+              ...snapShot.data()
+            }
+          })
+        });
+      } else {
+        this.setState({currentUser: userAuth});
+      }
     });
-    //THE ABOVE ^^ PORTION ALLOWS USER SIGN-IN & PERSISTENCE UNTIL MANUAL LOG-OUT
   }
 
   componentWillUnmount() {
     this.unsubscribeFromAuth();
-    // THIS SECTION CLOSES SIGN-IN SUBSCRIPTION - by calling unsubscribeFromAuth 
   }
   // &&&&&&&&&&&&&&&&&&&&&&&&
 
