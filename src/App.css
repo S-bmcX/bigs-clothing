@@ -10,3 +10,7 @@ a {
     text-decoration: none !important;
     font-weight: bold;
 }
+
+* {
+    box-sizing: border-box;
+}
