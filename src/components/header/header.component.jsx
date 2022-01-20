@@ -1,9 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import { auth } from '../../firebase/firebase.utils';
 import CartIcon from '../cart-icon/cart-icon.component';
 import CartDropdown from '../cart-dropdown/cart-dropdown.component';
+import { selectCartHidden } from '../../redux/cart/cart.selectors';
+import { selectCurrentUser } from '../../redux/user/user.selector';
 import {ReactComponent as Logo} from '../../assets/crown.svg';
 // TO UNDERSTAND WHY THE ABOVE WAS DONE, READ HERE -> https://facebook.github.io/create-react-app/docs/adding-images-fonts-and-files
 // short version: imports file destination as a react component as opposed to its source content. This is unique for SVG w/ React
@@ -35,9 +38,16 @@ const Header = ({ currentUser, hidden }) => (
     </div>
 );
 
-const mapStateToProps = ({user: {currentUser}, cart: {hidden}}) => ({
-    currentUser,
-    hidden
+
+// USING createStructuredSelector in the below removes need for STATE calls/pairing
+const mapStateToProps = createStructuredSelector({
+    currentUser: selectCurrentUser,
+    hidden: selectCartHidden
 });
+
+// const mapStateToProps = (state) => ({
+//     currentUser: selectCurrentUser(state),
+//     hidden: selectCartHidden(state)
+// });
 
 export default connect(mapStateToProps)(Header);
