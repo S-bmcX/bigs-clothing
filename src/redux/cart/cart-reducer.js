@@ -1,5 +1,5 @@
 import CartActionTypes from './cart.types';
-import { addItemToCart } from './cart.utils';
+import { addItemToCart, removeItemFromCart } from './cart.utils';
 
 const INITIAL_STATE =  {
     hidden: true,
@@ -17,7 +17,18 @@ const cartReducer = (state = INITIAL_STATE, action) => {
                 return {
                     ...state,
                     cartItems: addItemToCart(state.cartItems, action.payload)
-                }
+                };
+            case CartActionTypes.REMOVE_ITEM:
+                return {
+                    ...state,
+                    cartItems: removeItemFromCart(state.cartItems, action.payload)
+                };
+            case CartActionTypes.CLEAR_ITEM_FROM_CART:
+                return {
+                    ...state,
+                    cartItems: state.cartItems.filter(cartItem => cartItem.id !== action.payload.id )
+                };
+                // using .filter() targets the identified piece of information and removes it from the returned array (example array has 1,2,3,4,5. you target 5 to be deleted, the above identifies 5 and deletes it from the array)
             default:
                 return state;
     }
