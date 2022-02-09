@@ -28,5 +28,17 @@
       margin-left: auto;
       font-size: 36px;
     }
+
+    .paymentSection {
+      text-align: center;
+    }
+
+    .paymentAlert p, .paymentAlert ul li {
+      font-size: 20px;
+      color: red;
+      font-weight: bold;
+      list-style: none !important;
+      text-align: left !important;
+    }
   }
   

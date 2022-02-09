@@ -4,6 +4,7 @@ import { createStructuredSelector } from 'reselect';
 // import CartItem from '../../components/cart-item/cart-item.component';
 import { selectCartItems, selectCartTotal } from '../../redux/cart/cart.selectors';
 import CheckoutItem from '../../components/checkout-item/checkout-item.component';
+import StripeCheckoutBtn from '../../components/stripe-button/stripe-button.component';
 
 import './checkout.styles.scss';
 
@@ -33,6 +34,18 @@ const CheckoutPage = ({cartItems, total}) => (
         }
         <div className="total">
             <span className="totalValue">Total: ${total}</span>
+        </div>
+        <div className="paymentSection">
+            <StripeCheckoutBtn price={total} />
+            <div className="paymentAlert col-xs-6">
+                <p>*****PLEASE USE THE BELOW TEST-NET CARD INFO IN ORDER TO SEE PAYMENT PROCESS FUNCTION*****</p>
+                <ul>
+                    <li>Card Number: 4242 4242 4242 4242</li>
+                    <li>Brand: Visa</li>
+                    <li>CVC: Any 3 digits</li>
+                    <li>Expiration: Any future date</li>
+                </ul>
+            </div>
         </div>
     </div>
 );
